@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Do you love me?</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Arial, Helvetica, sans-serif;background:#ffeef6;display:flex;align-items:center;justify-content:center}
+    .app{padding:20px}
+    .container{width:360px;max-width:92%;background:#fff;border-radius:14px;padding:18px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.09)}
+    .local-video, .video-result{width:180px;height:auto;border-radius:10px;display:block;margin:8px auto}
+    .question{margin:8px 0 10px;font-size:20px}
+    .button-container{position:relative;height:100px;margin-top:8px}
+    .btn{padding:10px 18px;border:0;border-radius:999px;cursor:pointer;font-size:16px;user-select:none;-webkit-tap-highlight-color:transparent;}
+    .yes-btn{background:linear-gradient(90deg,#ff8eb0,#ff6f91);color:#fff}
+    .no-btn{background:#eee;color:#333;position:absolute;left:60%;top:50%;transform:translate(-50%,-50%);transition:left .18s ease, top .18s ease; z-index:10;}
+    .hidden{display:none}
+    .back-btn{margin-top:12px;padding:8px 12px;border-radius:8px;border:1px solid #ddd;cursor:pointer}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <!-- First screen -->
+    <div class="question-container container">
+      <video class="local-video" autoplay loop muted playsinline>
+        <source src="love.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h2 class="question">wanna fuck with me?</h2>
+      <div class="button-container" id="buttonWrap">
+        <button class="yes-btn btn js-yes-btn">Yes</button>
+        <button class="no-btn btn js-no-btn">No</button>
+      </div>
+    </div>
+
+    <!-- Result screen -->
+    <div class="result-container container hidden">
+      <video class="video-result" autoplay loop muted playsinline>
+        <source src="yes-love.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <h2 class="question">letss fuck and cum🤤</h2>
+      <button class="back-btn js-back-btn">Back</button>
+    </div>
+  </main>
+
+  <script>
+    const yesBtn = document.querySelector(".js-yes-btn");
+    const noBtn = document.querySelector(".js-no-btn");
+    const backBtn = document.querySelector(".js-back-btn");
+    const questionContainer = document.querySelector(".question-container");
+    const resultContainer = document.querySelector(".result-container");
+
+    // Show result on Yes
+    yesBtn.addEventListener("click", () => {
+      questionContainer.classList.add("hidden");
+      resultContainer.classList.remove("hidden");
+    });
+
+    // Back button
+    backBtn.addEventListener("click", () => {
+      resultContainer.classList.add("hidden");
+      questionContainer.classList.remove("hidden");
+    });
+
+    // Move No button for both desktop and mobile
+    function moveNoButton() {
+      const buttonWrap = document.getElementById("buttonWrap");
+      const wrapRect = buttonWrap.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+      const offset = 30;
+
+      let newLeft, newTop;
+      do {
+        newLeft = Math.random() * (wrapRect.width - btnRect.width - offset);
+        newTop = Math.random() * (wrapRect.height - btnRect.height - offset);
+      } while (newLeft < 20 || newTop < 20);
+
+      noBtn.style.left = `${newLeft}px`;
+      noBtn.style.top = `${newTop}px`;
+    }
+
+    // Desktop: hover
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Mobile: touch
+    noBtn.addEventListener("touchstart", moveNoButton);
+  </script>
+</body>
+</html>
